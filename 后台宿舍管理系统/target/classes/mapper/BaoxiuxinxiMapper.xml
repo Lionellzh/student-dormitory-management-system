@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.BaoxiuxinxiInfoDao">
+
+    <select id="checkRepeat" resultType="java.lang.Integer">
+        select count(id) from `baoxiuxinxi_info` where ${column} = #{value}
+        <if test="id != null">
+            and id != #{id}
+        </if>
+    </select>
+
+  <select id="findByXuehaozj" resultType="com.example.vo.BaoxiuxinxiInfoVo">
+        select * from `baoxiuxinxi_info` where `xuehao` = #{username}
+    </select>
+
+    <select id="findByXingming" resultType="com.example.vo.BaoxiuxinxiInfoVo">
+        select `baoxiuxinxi_info`.* from `baoxiuxinxi_info`
+        where 1 = 1
+        <if test="xingming != null and xingming != '' and xingming != 'all'">
+            and `baoxiuxinxi_info`.`xingming` like concat('%', #{xingming}, '%')
+        </if>
+        order by `baoxiuxinxi_info`.id
+    </select>
+	<select id="findByXingminglist2" resultType="com.example.vo.BaoxiuxinxiInfoVo">
+        select `baoxiuxinxi_info`.* from `baoxiuxinxi_info`
+        where 1 = 1
+        <if test="xingming != null and xingming != '' and xingming != 'all'">
+            and `baoxiuxinxi_info`.`xingming` like concat('%', #{xingming}, '%')
+        </if>
+		<if test="xuehao != null and xuehao != '' and xuehao != 'all'">
+            and `baoxiuxinxi_info`.`xuehao` like concat('%', #{xuehao}, '%')
+        </if>
+        order by `baoxiuxinxi_info`.id
+    </select>        <!--list23N-->
+    <select id="count" resultType="Integer">
+        select count(id) from `baoxiuxinxi_info`
+    </select>
+</mapper>
+
